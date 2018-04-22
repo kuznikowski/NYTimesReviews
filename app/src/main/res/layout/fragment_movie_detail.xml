@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".ui.detail.MovieDetailActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_movie_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginLeft="@dimen/movie_detail_cards_margin_left_right"
+        android:layout_marginRight="@dimen/movie_detail_cards_margin_left_right"
+        android:layout_marginTop="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_byline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"
+                tools:text="John Doe"/>
+
+            <TextView
+                android:id="@+id/text_movie_display_title"
+                style="@android:style/TextAppearance.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                tools:text="Review headline"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_medium"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="@string/critics_pick"/>
+
+                <TextView
+                    android:id="@+id/text_movie_critics_pick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/no"
+                    android:gravity="center"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_movie_publication_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                tools:text="Publication date: 04.04.2018"/>
+
+            <TextView
+                android:id="@+id/text_article_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@color/blue"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                tools:text="Read the New York Times Review of the very long title movie"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_movie_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_movie_detail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_marginLeft="@dimen/movie_detail_cards_margin_left_right"
+        android:layout_marginRight="@dimen/movie_detail_cards_margin_left_right"
+        android:layout_marginTop="@dimen/spacing_small">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium">
+
+            <TextView
+                android:id="@+id/text_movie_summary_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_detail_short_summary"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/text_movie_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_movie_summary_title"
+                android:paddingTop="@dimen/spacing_medium"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

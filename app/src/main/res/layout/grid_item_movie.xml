@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/image_linear_layout"
+    android:adjustViewBounds="true">
+
+   <dtmovies.dtmovies.ui.ProportionalImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/image_movie_poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/content_description_movie_poster" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:id="@+id/movie_title"
+        android:ellipsize="end"/>
+
+</LinearLayout>
