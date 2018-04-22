@@ -5,6 +5,9 @@ A small app that displays latest NYTimes movies' reviews and allows user to sear
 ### API Key
 
 In order to build the app, just put your NYTimes API key in `~/api/AuthInterceptor.class`.
+```
+private static final String API_KEY = "your-nytimes-api-key"; // put your NYTimes API key here
+```
 
 ### Download
 
