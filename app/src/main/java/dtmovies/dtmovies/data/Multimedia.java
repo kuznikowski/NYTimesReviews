@@ -21,7 +21,7 @@ public class Multimedia {
     @Expose
     private Integer width;
 
-    public Multimedia(String src) {
+    Multimedia(String src) {
         this.src = src;
     }
 

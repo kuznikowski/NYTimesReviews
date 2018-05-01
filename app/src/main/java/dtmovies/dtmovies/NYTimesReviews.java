@@ -3,7 +3,7 @@ package dtmovies.dtmovies;
 import android.app.Application;
 import dtmovies.dtmovies.api.NetworkModule;
 
-public class DTMovies extends Application {
+public class NYTimesReviews extends Application {
 
     private NetworkComponent networkComponent;
 

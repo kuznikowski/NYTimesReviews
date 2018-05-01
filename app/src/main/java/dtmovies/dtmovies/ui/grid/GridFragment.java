@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import dtmovies.dtmovies.DTMovies;
+import dtmovies.dtmovies.NYTimesReviews;
 import dtmovies.dtmovies.R;
 import dtmovies.dtmovies.api.ResponseModel;
 import dtmovies.dtmovies.api.ReviewsService;
@@ -38,9 +37,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MoviesGridFragment extends AbstractMoviesGridFragment {
+public class GridFragment extends AbstractGridFragment {
 
-    private static final String LOG_TAG = "MoviesGridFragment";
     private static final int SEARCH_QUERY_DELAY_MILLIS = 500;
 
     @Inject
@@ -56,9 +54,9 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (Objects.requireNonNull(action).equals(MoviesService.BROADCAST_UPDATE_FINISHED)) {
-                if (!intent.getBooleanExtra(MoviesService.EXTRA_IS_SUCCESSFUL_UPDATED, true)) {
-                    Snackbar.make(swipeRefreshLayout, R.string.error_failed_to_update_movies,
+            if (Objects.requireNonNull(action).equals(MoviesService.UPDATE_FINISHED)) {
+                if (!intent.getBooleanExtra(MoviesService.IS_SUCCESSFUL_UPDATED, true)) {
+                    Snackbar.make(swipeRefreshLayout, R.string.failed_to_update_movies,
                             Snackbar.LENGTH_LONG)
                             .show();
                 }
@@ -69,8 +67,8 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
         }
     };
 
-    public static MoviesGridFragment create() {
-        return new MoviesGridFragment();
+    public static GridFragment create() {
+        return new GridFragment();
     }
 
     @Override
@@ -78,14 +76,14 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ((DTMovies) Objects.requireNonNull(getActivity()).getApplication()).getNetworkComponent().inject(this);
+        ((NYTimesReviews) Objects.requireNonNull(getActivity()).getApplication()).getNetworkComponent().inject(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MoviesService.BROADCAST_UPDATE_FINISHED);
+        intentFilter.addAction(MoviesService.UPDATE_FINISHED);
         LocalBroadcastManager.getInstance(Objects.requireNonNull(getActivity())).registerReceiver(broadcastReceiver, intentFilter);
         if (endlessRecyclerViewOnScrollListener != null) {
             endlessRecyclerViewOnScrollListener.setLoading(moviesService.isLoading());
@@ -129,7 +127,7 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
     @Override
     @NonNull
     protected Uri getContentUri() {
-        return MoviesContract.LatestReviews.CONTENT_URI;
+        return MoviesContract.MovieEntry.CONTENT_URI;
     }
 
     @Override
@@ -159,9 +157,9 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
 
     private void setupSearchView() {
         if (searchView == null) {
-            Log.e(LOG_TAG, "SearchView is not initialized");
             return;
         }
+
         SearchManager searchManager = (SearchManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(Objects.requireNonNull(searchManager).getSearchableInfo(getActivity().getComponentName()));
 
@@ -169,10 +167,9 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
                 .debounce(SEARCH_QUERY_DELAY_MILLIS, TimeUnit.MILLISECONDS)
                 .map(CharSequence::toString)
                 .filter(query -> query.length() > 0)
-                .doOnNext(query -> Log.d("search", query))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.newThread())
-                .switchMap(query -> reviewsService.searchMovies(query, null))
+                .switchMap(query -> reviewsService.searchReviews(query))
                 .map(ResponseModel::getMovies)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Movie>>() {
@@ -188,17 +185,15 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(LOG_TAG, "Error", e);
+                        List<Movie> results = moviesService.findMoviesOffline(searchView.getQuery().toString());
+                        if (results != null) {
+                            setAdapterAndSaveMovies(results);
+                        }
                     }
 
                     @Override
                     public void onNext(List<Movie> results) {
-                        MoviesSearchAdapter adapter = new MoviesSearchAdapter(getContext(), results);
-                        adapter.setOnItemClickListener((itemView, position) ->
-                                getOnItemSelectedListener().onItemSelected(adapter.getItem(position))
-                        );
-                        recyclerView.setAdapter(adapter);
-                        updateGridLayout();
+                        setAdapterAndSaveMovies(results);
                     }
                 });
 
@@ -208,6 +203,16 @@ public class MoviesGridFragment extends AbstractMoviesGridFragment {
             updateGridLayout();
             swipeRefreshLayout.setEnabled(false);
         });
+    }
+
+    private void setAdapterAndSaveMovies(List<Movie> results) {
+        MoviesSearchAdapter adapter = new MoviesSearchAdapter(getContext(), results);
+        adapter.setOnItemClickListener((itemView, position) ->
+                getOnItemSelectedListener().onItemSelected(adapter.getItem(position))
+        );
+        recyclerView.setAdapter(adapter);
+        updateGridLayout();
+        moviesService.saveMovies(results);
     }
 
     private void refreshMovies() {

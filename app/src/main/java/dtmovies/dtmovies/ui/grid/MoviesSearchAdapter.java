@@ -20,7 +20,7 @@ import dtmovies.dtmovies.R;
 import dtmovies.dtmovies.data.Movie;
 import dtmovies.dtmovies.util.OnItemClickListener;
 
-public class MoviesSearchAdapter extends ArrayRecyclerViewAdapter<Movie, MovieGridItemViewHolder> {
+class MoviesSearchAdapter extends ArrayRecyclerViewAdapter<Movie, GridItemViewHolder> {
 
     private final Context context;
     private OnItemClickListener onItemClickListener;
@@ -32,14 +32,14 @@ public class MoviesSearchAdapter extends ArrayRecyclerViewAdapter<Movie, MovieGr
 
     @NonNull
     @Override
-    public MovieGridItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GridItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_movie, parent, false);
-        return new MovieGridItemViewHolder(itemView, onItemClickListener);
+        return new GridItemViewHolder(itemView, onItemClickListener);
     }
 
     @Override
     @SuppressLint("PrivateResource")
-    public void onBindViewHolder(@NonNull MovieGridItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GridItemViewHolder holder, int position) {
         Movie movie = getItems().get(position);
         holder.movieTitle.setText(movie.getDisplayTitle());
 

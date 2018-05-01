@@ -11,7 +11,7 @@ public class ItemOffsetDecoration extends RecyclerView.ItemDecoration {
 
     private final int mItemOffset;
 
-    public ItemOffsetDecoration(int itemOffset) {
+    private ItemOffsetDecoration(int itemOffset) {
         mItemOffset = itemOffset;
     }
 

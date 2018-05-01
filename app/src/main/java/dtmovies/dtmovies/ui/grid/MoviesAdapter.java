@@ -20,7 +20,7 @@ import dtmovies.dtmovies.data.Movie;
 import dtmovies.dtmovies.util.CursorRecyclerViewAdapter;
 import dtmovies.dtmovies.util.OnItemClickListener;
 
-public class MoviesAdapter extends CursorRecyclerViewAdapter<MovieGridItemViewHolder> {
+public class MoviesAdapter extends CursorRecyclerViewAdapter<GridItemViewHolder> {
     private final Context context;
     private OnItemClickListener onItemClickListener;
 
@@ -35,7 +35,7 @@ public class MoviesAdapter extends CursorRecyclerViewAdapter<MovieGridItemViewHo
 
     @Override
     @SuppressLint("PrivateResource")
-    public void onBindViewHolder(MovieGridItemViewHolder viewHolder, Cursor cursor) {
+    public void onBindViewHolder(GridItemViewHolder viewHolder, Cursor cursor) {
         if (cursor != null) {
             Movie movie = Movie.fromCursor(cursor);
             viewHolder.movieTitle.setText(movie.getDisplayTitle());
@@ -61,9 +61,9 @@ public class MoviesAdapter extends CursorRecyclerViewAdapter<MovieGridItemViewHo
 
     @NonNull
     @Override
-    public MovieGridItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GridItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item_movie, parent, false);
-        return new MovieGridItemViewHolder(itemView, onItemClickListener);
+        return new GridItemViewHolder(itemView, onItemClickListener);
     }
 
     @Nullable

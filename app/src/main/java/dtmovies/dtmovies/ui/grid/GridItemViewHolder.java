@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import dtmovies.dtmovies.R;
 import dtmovies.dtmovies.util.OnItemClickListener;
 
-public class MovieGridItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class GridItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     @BindView(R.id.image_movie_poster)
     ImageView moviePoster;
@@ -21,7 +21,7 @@ public class MovieGridItemViewHolder extends RecyclerView.ViewHolder implements 
 
     private final OnItemClickListener onItemClickListener;
 
-    public MovieGridItemViewHolder(View itemView, @Nullable OnItemClickListener onItemClickListener) {
+    GridItemViewHolder(View itemView, @Nullable OnItemClickListener onItemClickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.onItemClickListener = onItemClickListener;

@@ -1,8 +1,6 @@
 package dtmovies.dtmovies.api;
 
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class NetworkModule {
 
-    private static final String BASE_URL = "https://api.nytimes.com/svc/movies/v2/reviews/";
-    private static final long CACHE_SIZE = 10 * 1024 * 1024; // = 10 MB cache size
+    private static final String BASE_URL = "https://api.nytimes.com/svc/movies/v2/reviews/"; // NYTimes reviews base URL
+    private static final long CACHE_SIZE = 10 * 1024 * 1024; // = 10 MB
     private static final int CONNECT_TIMEOUT = 15;
     private static final int WRITE_TIMEOUT = 60;
     private static final int TIMEOUT = 60;
@@ -46,7 +44,7 @@ public class NetworkModule {
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(new AuthorizationInterceptor())
+                .addInterceptor(new AuthInterceptor())
                 .cache(cache);
 
         return builder.build();
@@ -61,12 +59,6 @@ public class NetworkModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferences providesSharedPreferences(Application application) {
-        return PreferenceManager.getDefaultSharedPreferences(application);
     }
 
     @Provides

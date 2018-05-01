@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import dtmovies.dtmovies.DTMovies;
+import dtmovies.dtmovies.NYTimesReviews;
 import dtmovies.dtmovies.R;
 import dtmovies.dtmovies.api.ReviewsService;
 import dtmovies.dtmovies.data.Movie;
@@ -73,7 +73,7 @@ public class MovieDetailFragment extends RxFragment {
             movie = getArguments().getParcelable(ARG_MOVIE);
         }
 
-        ((DTMovies) Objects.requireNonNull(getActivity()).getApplication()).getNetworkComponent().inject(this);
+        ((NYTimesReviews) Objects.requireNonNull(getActivity()).getApplication()).getNetworkComponent().inject(this);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class MovieDetailFragment extends RxFragment {
         });
     }
 
-    public float convertDpToPixel(float dp) {
+    private float convertDpToPixel(float dp) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }

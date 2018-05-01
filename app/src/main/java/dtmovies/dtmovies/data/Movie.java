@@ -23,12 +23,12 @@ public class Movie implements Parcelable {
         }
     };
 
-    public Movie(long id, String headline) {
+    private Movie(long id, String headline) {
         this.id = id;
         this.headline = headline;
     }
 
-    protected Movie(Parcel in) {
+    private Movie(Parcel in) {
         this.id = in.readLong();
         this.displayTitle = in.readString();
         this.mpaaRating = in.readString();
@@ -100,7 +100,7 @@ public class Movie implements Parcelable {
         return displayTitle;
     }
 
-    public void setDisplayTitle(String displayTitle) {
+    private void setDisplayTitle(String displayTitle) {
         this.displayTitle = displayTitle;
     }
 
@@ -116,7 +116,7 @@ public class Movie implements Parcelable {
         return criticsPick;
     }
 
-    public void setCriticsPick(Integer criticsPick) {
+    private void setCriticsPick(Integer criticsPick) {
         this.criticsPick = criticsPick;
     }
 
@@ -124,7 +124,7 @@ public class Movie implements Parcelable {
         return byline;
     }
 
-    public void setByline(String byline) {
+    private void setByline(String byline) {
         this.byline = byline;
     }
 
@@ -132,7 +132,7 @@ public class Movie implements Parcelable {
         return headline;
     }
 
-    public void setHeadline(String headline) {
+    private void setHeadline(String headline) {
         this.headline = headline;
     }
 
@@ -140,7 +140,7 @@ public class Movie implements Parcelable {
         return summaryShort;
     }
 
-    public void setSummaryShort(String summaryShort) {
+    private void setSummaryShort(String summaryShort) {
         this.summaryShort = summaryShort;
     }
 
@@ -148,7 +148,7 @@ public class Movie implements Parcelable {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    private void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -172,7 +172,7 @@ public class Movie implements Parcelable {
         return link;
     }
 
-    public void setLink(Link link) {
+    private void setLink(Link link) {
         this.link = link;
     }
 
@@ -180,7 +180,7 @@ public class Movie implements Parcelable {
         return multimedia;
     }
 
-    public void setMultimedia(Multimedia multimedia) {
+    private void setMultimedia(Multimedia multimedia) {
         this.multimedia = multimedia;
     }
 
@@ -229,7 +229,9 @@ public class Movie implements Parcelable {
         values.put(MoviesContract.MovieEntry.COLUMN_PUBLICATION_DATE, publicationDate);
         values.put(MoviesContract.MovieEntry.COLUMN_ARTICLE_LINK, getLink().getUrl());
         values.put(MoviesContract.MovieEntry.COLUMN_LINK_TEXT, getLink().getSuggestedLinkText());
-        values.put(MoviesContract.MovieEntry.COLUMN_IMAGE_SRC, getMultimedia().getSrc());
+        if (getMultimedia() != null && getMultimedia().getSrc() != null) {
+            values.put(MoviesContract.MovieEntry.COLUMN_IMAGE_SRC, getMultimedia().getSrc());
+        }
         return values;
     }
 

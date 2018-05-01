@@ -7,13 +7,13 @@ import dtmovies.dtmovies.ui.MainActivity;
 import dtmovies.dtmovies.api.NetworkModule;
 import dtmovies.dtmovies.ui.detail.MovieDetailActivity;
 import dtmovies.dtmovies.ui.detail.MovieDetailFragment;
-import dtmovies.dtmovies.ui.grid.MoviesGridFragment;
+import dtmovies.dtmovies.ui.grid.GridFragment;
 
 @Singleton
 @Component(modules = {AppModule.class, NetworkModule.class})
 public interface NetworkComponent {
 
-    void inject(MoviesGridFragment moviesGridFragment);
+    void inject(GridFragment gridFragment);
 
     void inject(MainActivity mainActivity);
 

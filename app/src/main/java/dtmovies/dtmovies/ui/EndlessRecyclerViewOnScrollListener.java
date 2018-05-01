@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 public abstract class EndlessRecyclerViewOnScrollListener extends RecyclerView.OnScrollListener {
 
-    private static final int VISIBLE_THRESHOLD = 5;
+    private static final int VISIBLE_THRESHOLD = 7; // set number of remaining items to swipe when loading more items
 
     private final GridLayoutManager gridLayoutManager;
     private boolean loading = false;
 
-    public EndlessRecyclerViewOnScrollListener(GridLayoutManager gridLayoutManager) {
+    protected EndlessRecyclerViewOnScrollListener(GridLayoutManager gridLayoutManager) {
         this.gridLayoutManager = gridLayoutManager;
     }
 
@@ -21,6 +21,7 @@ public abstract class EndlessRecyclerViewOnScrollListener extends RecyclerView.O
         int totalItemCount = gridLayoutManager.getItemCount();
         int lastVisibleItemPosition = gridLayoutManager.findLastVisibleItemPosition();
 
+        // decide whether load more items
         boolean endHasBeenReached = lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount;
         if (!loading && totalItemCount > 0 && endHasBeenReached) {
             loading = true;
@@ -32,5 +33,5 @@ public abstract class EndlessRecyclerViewOnScrollListener extends RecyclerView.O
         this.loading = loading;
     }
 
-    public abstract void onLoadMore();
+    protected abstract void onLoadMore();
 }

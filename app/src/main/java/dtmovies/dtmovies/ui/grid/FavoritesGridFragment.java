@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import dtmovies.dtmovies.data.MoviesContract;
 
-public class FavoritesGridFragment extends AbstractMoviesGridFragment {
+public class FavoritesGridFragment extends AbstractGridFragment {
 
     public static FavoritesGridFragment create() {
         return new FavoritesGridFragment();

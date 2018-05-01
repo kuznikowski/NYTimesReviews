@@ -31,9 +31,9 @@
                 android:id="@+id/backdrop_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/content_description_movie_backdrop"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                tools:ignore="contentDescription"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar

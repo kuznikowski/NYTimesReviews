@@ -25,11 +25,12 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dtmovies.dtmovies.R;
+import dtmovies.dtmovies.data.MoviesContract;
 import dtmovies.dtmovies.ui.ItemOffsetDecoration;
 import dtmovies.dtmovies.util.OnItemClickListener;
 import dtmovies.dtmovies.util.OnItemSelectedListener;
 
-public abstract class AbstractMoviesGridFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
+public abstract class AbstractGridFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>,
         OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int LOADER_ID = 0;
@@ -46,7 +47,7 @@ public abstract class AbstractMoviesGridFragment extends Fragment implements Loa
     private OnItemSelectedListener onItemSelectedListener;
     private GridLayoutManager gridLayoutManager;
 
-    public AbstractMoviesGridFragment() {
+    public AbstractGridFragment() {
         // Required empty public constructor
     }
 
@@ -95,15 +96,15 @@ public abstract class AbstractMoviesGridFragment extends Fragment implements Loa
         updateGridLayout();
     }
 
-    public OnItemSelectedListener getOnItemSelectedListener() {
+    OnItemSelectedListener getOnItemSelectedListener() {
         return onItemSelectedListener;
     }
 
-    protected void restartLoader() {
-        getLoaderManager().restartLoader(LOADER_ID, null, AbstractMoviesGridFragment.this);
+    void restartLoader() {
+        getLoaderManager().restartLoader(LOADER_ID, null, AbstractGridFragment.this);
     }
 
-    protected void updateGridLayout() {
+    void updateGridLayout() {
         if (recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() == 0) {
             recyclerView.setVisibility(View.GONE);
             noMoviesView.setVisibility(View.VISIBLE);
@@ -113,7 +114,7 @@ public abstract class AbstractMoviesGridFragment extends Fragment implements Loa
         }
     }
 
-    protected void initMoviesGrid() {
+    void initMoviesGrid() {
         adapter = new MoviesAdapter(getContext(), null);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -139,7 +140,7 @@ public abstract class AbstractMoviesGridFragment extends Fragment implements Loa
                 null,
                 null,
                 null,
-                null
+                MoviesContract.MovieEntry.COLUMN_PUBLICATION_DATE + " DESC"
         );
     }
 
@@ -165,11 +166,11 @@ public abstract class AbstractMoviesGridFragment extends Fragment implements Loa
         onRefreshAction();
     }
 
-    public MoviesAdapter getAdapter() {
+    MoviesAdapter getAdapter() {
         return adapter;
     }
 
-    public GridLayoutManager getGridLayoutManager() {
+    GridLayoutManager getGridLayoutManager() {
         return gridLayoutManager;
     }
 }

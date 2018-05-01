@@ -3,6 +3,10 @@ package dtmovies.dtmovies.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 
+/**
+ *  An ImageView with 3:2 ratio designed for 210x140 px NYTimes images
+ */
+
 public class ProportionalImageView extends android.support.v7.widget.AppCompatImageView {
 
     private static final float ASPECT_RATIO = 1.5f;

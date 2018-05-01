@@ -5,10 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Local movie database manager.
+ * Local movies database manager.
  */
 
-public class MoviesDbHelper extends SQLiteOpenHelper {
+class MoviesDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "movies.db";
     private static final int DATABASE_SCHEMA_VERSION = 4;
@@ -21,14 +21,12 @@ public class MoviesDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(MoviesContract.MovieEntry.SQL_CREATE_TABLE);
-        db.execSQL(MoviesContract.LatestReviews.SQL_CREATE_TABLE);
         db.execSQL(MoviesContract.Favorites.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DROP_TABLE_IF_EXISTS + MoviesContract.MovieEntry.TABLE_NAME);
-        db.execSQL(SQL_DROP_TABLE_IF_EXISTS + MoviesContract.LatestReviews.TABLE_NAME);
         db.execSQL(SQL_DROP_TABLE_IF_EXISTS + MoviesContract.Favorites.TABLE_NAME);
         onCreate(db);
     }

@@ -27,14 +27,14 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dtmovies.dtmovies.DTMovies;
+import dtmovies.dtmovies.NYTimesReviews;
 import dtmovies.dtmovies.R;
 import dtmovies.dtmovies.data.FavoritesService;
 import dtmovies.dtmovies.data.Movie;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    private static final String ARG_MOVIE = "argMovie";
+    private static final String MOVIE_TO_SHOW = "movieToShow";
 
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
@@ -56,7 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     public static void start(Context context, Movie movie) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
-        intent.putExtra(ARG_MOVIE, movie);
+        intent.putExtra(MOVIE_TO_SHOW, movie);
         context.startActivity(intent);
     }
 
@@ -65,9 +65,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
-        movie = getIntent().getParcelableExtra(ARG_MOVIE);
+        movie = getIntent().getParcelableExtra(MOVIE_TO_SHOW);
 
-        ((DTMovies) getApplication()).getNetworkComponent().inject(this);
+        ((NYTimesReviews) getApplication()).getNetworkComponent().inject(this);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -136,9 +136,8 @@ public class MovieDetailActivity extends AppCompatActivity {
         showSnackbar(getString(messageResourceId));
     }
 
-    public float convertDpToPixel(float dp) {
+    private float convertDpToPixel(float dp) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
-
 }
