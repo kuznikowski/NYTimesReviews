@@ -1,6 +1,6 @@
 # NYTimesReviews
 
-A small app that displays latest NYTimes movies' reviews and allows user to search through the movies' titles.
+A small app that displays latest NYTimes movies' reviews and allows user to search through the movies' titles (also offline).
 
 ### API Key
 
